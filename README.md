@@ -1,114 +1,121 @@
 # 📈 Graph Plotter
 
-A lightweight desktop graphing calculator built with Python and Tkinter. Type a function, hit **Plot**, and explore it with zoom and pan. No third-party libraries required.
+A desktop graphing calculator built with Python and Tkinter, with a dark theme and no third-party dependencies. Plot several functions at once, draw inequalities and implicit curves, restrict domains, tweak parameters with sliders, and compute definite integrals, all from a single window.
 
 ## ✨ Features
 
-- **Plot any function of `x`**: type expressions like `x**2`, `sin(x)/x`, or `exp(-x**2)`.
-- **Multiple graphs at once**: separate functions with commas (e.g. `sin(x), cos(x), x**2`). Each gets its own color and a legend entry.
-- **Polynomial Builder**: choose a degree (0–10) and enter coefficients instead of typing the expression by hand. Quick buttons for Linear, Quadratic, Cubic and Quartic.
-- **Trig and inverse trig buttons**: insert `sin`, `cos`, `tan`, `cot`, `sec`, `csc` and `asin`, `acos`, `atan`, `acot`, `asec`, `acsc` with one click.
-- **Interactive canvas**:
-  - Scroll to zoom in/out around the cursor
-  - Click and drag to pan
-  - **Reset View** to return to the default window
-- **Adaptive grid**: grid lines and axis labels adjust automatically as you zoom.
-- **Graceful handling of discontinuities**: asymptotes (e.g. `tan(x)`, `1/x`) are broken into separate segments rather than drawn as a vertical line.
-- **Error feedback**: invalid expressions are flagged with `(error)` in the legend, and invalid ranges show a dialog.
-- **Restricted `eval` namespace**: expressions are evaluated with builtins disabled, exposing only math functions.
+- **Multiple expressions**: add or remove rows with **+ Add** / **✕**. Each row gets its own color, and the toolbar inserts into whichever row is active.
+- **Plain functions** `f(x)`: for example `x^2`, `log(x)`, `sin(x)/x`.
+- **Domain restrictions**: append `{condition}` to limit where a function is drawn, e.g. `floor(x) {-1<=x<=5}`. Combine conditions with `and` / `or`.
+- **Inequalities and implicit equations** in `x` and `y`:
+  - `y < x^2` shades the region
+  - `x^2 + y^2 = 25` draws the curve
+  - `x > 2` shades the vertical strip where it holds
+- **Parameter sliders** `a`, `b`, `c`, `k` (range −10 to 10): use them in any expression, e.g. `a*sin(b*x + c)`, and the graph updates live.
+- **Analysis toggles** (apply to plain-function rows):
+  - **Roots**: marks where the curve crosses zero
+  - **Extrema**: marks local maxima and minima
+  - **Inters**: marks intersections between curves
+  - **f'(x)**: overlays a dashed derivative curve
+- **Definite integral**: enter bounds **A** and **B** and click **Compute** to get the area under the first plain function (trapezoidal rule).
+- **Domain and range readout** next to each row.
+- **Pan and zoom**: drag to pan, scroll to zoom around the cursor.
+- **Live coordinates** in the status bar as you move the mouse.
+- **Symbol toolbar**: one-click trig, inverse trig, `log`, `ln`, `abs`, `sqrt`, `floor`, `frac`, braces, comparison operators, `and` / `or`, and variables.
+- **Settings and export**: toggle the background grid, and save a snapshot of the canvas.
 
 ## 🛠️ Requirements
 
 - Python 3.6 or newer
-- Tkinter (included with most Python installations)
+- Tkinter (bundled with most Python installs)
 
-Uses only the standard library (`tkinter`, `math`), so there is nothing to `pip install`.
+Only the standard library is used (`tkinter`, `math`, `re`), so there is nothing to `pip install`.
 
-> **Linux users:** if Tkinter is missing, install it with  
-> `sudo apt install python3-tk` (Debian/Ubuntu) or `sudo dnf install python3-tkinter` (Fedora).
+> **Linux:** if Tkinter is missing, run `sudo apt install python3-tk` (Debian/Ubuntu) or `sudo dnf install python3-tkinter` (Fedora).
 
 ## 🚀 Getting Started
 
 ```bash
-# Clone the repository
 git clone https://github.com/Anik-Kumar29/Graph-Plotter-.git
 cd Graph-Plotter-
-
-# The main code lives on the Graph_Plotter branch
-git checkout Graph_Plotter
-
-# Run the app
+git checkout Graph_Plotter     # the main code lives on this branch
 python graph_plotter.py
 ```
 
+The app opens with three example rows: `x^2`, `log(x)` and `floor(x) {-1<=x<=5}`.
+
 ## 📖 Usage
 
-1. Enter one or more functions in the **f(x) =** box, separated by commas.
-2. Optionally set **X min** and **X max** to change the horizontal range.
-3. Press **Enter** or click **Plot**.
-4. Zoom with the mouse wheel, pan by dragging, and click **Reset View** to start over.
-5. Use the tabs below the input bar to build polynomials or insert trig functions. Clicking a button appends it to the current expression.
+1. Type an expression into a row and press **Enter** (or click a toolbar button, which inserts text and replots).
+2. Use **+ Add** for more rows and **✕** to delete one.
+3. Drag the `a`, `b`, `c`, `k` sliders to animate parameters.
+4. Tick **Roots**, **Extrema**, **Inters** or **f'(x)** for analysis overlays.
+5. Set **A** and **B**, then click **Compute** for the integral.
+6. **Reset** restores the default view and slider values.
 
 ### Example expressions
 
-| Expression | What it draws |
+| Type this | You get |
 |---|---|
-| `x**2` | Parabola |
-| `2*x**3 - 4*x + 1` | Cubic polynomial |
-| `sin(x), cos(x)` | Sine and cosine together |
-| `tan(x)` | Tangent with visible asymptotes |
-| `sqrt(x)` | Square root (defined for x ≥ 0) |
-| `log(x)` | Natural logarithm |
-| `exp(-x**2)` | Gaussian bell curve |
-| `abs(x)` | Absolute value |
+| `x^2` | Parabola |
+| `a*sin(b*x + c)` | Sine wave controlled by the sliders |
+| `sqrt(x) {x>=0}` | Square root on its domain |
+| `ln(x)` | Natural logarithm |
+| `log(x)` | Base-10 logarithm |
+| `floor(x) {-1<=x<=5}` | Step function limited to [−1, 5] |
+| `x {x<0 or x>2}` | Line with a gap between 0 and 2 |
+| `x^2 + y^2 = 25` | Circle of radius 5 |
+| `y < x^2` | Shaded region below the parabola |
+| `x > 2` | Shaded strip to the right of x = 2 |
 
-## 🧮 Supported Functions and Constants
+## 🧮 Syntax Notes
 
-| Category | Available |
+| Item | Details |
 |---|---|
-| Operators | `+`, `-`, `*`, `/`, `**` (power), parentheses |
-| Trigonometric | `sin`, `cos`, `tan`, `cot`, `sec`, `csc` |
+| Power | `^` or `**` (`x^2` and `x**2` both work) |
+| `log(x)` | **Base 10** |
+| `ln(x)` | Natural logarithm |
+| Trig | `sin`, `cos`, `tan`, `cot`, `sec`, `csc` (radians) |
 | Inverse trig | `asin`, `acos`, `atan`, `acot`, `asec`, `acsc` |
-| Hyperbolic | `sinh`, `cosh`, `tanh`, `asinh`, `acosh`, `atanh` |
-| Exponential / log | `exp`, `log`, `log10`, `log2`, `sqrt` |
-| Other | `abs`, `pow`, `min`, `max`, `floor`, `ceil`, `factorial`, `gamma`, ... |
-| Constants | `pi`, `e`, `tau`, `inf` |
+| Rounding | `floor(x)`, `ceil(x)`, `frac(x)` = x − ⌊x⌋ |
+| Other | `abs`, `sqrt`, `pow`, `min`, `max`, `exp`, and everything in Python's `math` module |
+| Constants | `pi`, `e`, `tau` |
+| Parameters | `a`, `b`, `c`, `k` (sliders) |
+| Restrictions | `{x>=0}`, `{-1<=x<=5}`, `{x<0 or x>2}` |
+| Relations | `<`, `>`, `<=`, `>=`, `=` |
 
-Everything in Python's [`math`](https://docs.python.org/3/library/math.html) module is available. Trig functions work in **radians**.
+## 🖱️ Controls
 
-> **Note:** use `**` for powers (`x**2`), not `^`.
+| Action | Effect |
+|---|---|
+| Scroll wheel | Zoom in/out at the cursor |
+| Click and drag | Pan the view |
+| Mouse move | Shows `X` / `Y` in the status bar |
+| Enter | Replot the current row |
 
 ## 📁 Project Structure
 
 ```
 Graph-Plotter-/
-├── graph_plotter.py   # Complete application (GUI + plotting logic)
+├── graph_plotter.py   # Complete application (UI, parsing, plotting, analysis)
 └── README.md
 ```
 
-## ⚙️ How It Works
+## ⚠️ Known Limitations
 
-- The visible window is mapped to canvas pixels through `_to_screen` / `_to_math` coordinate helpers.
-- Each function is sampled at roughly one point per horizontal pixel (minimum 300 samples).
-- Points that raise errors or return `NaN`/`inf`/complex values are skipped, which splits the line into segments.
-- A sudden jump larger than 1.5× the canvas height is treated as an asymptote and the line is broken.
-- Grid spacing uses a "nice step" algorithm (1, 2, 5 × 10ⁿ) to keep labels readable at any zoom level.
-
-## 🔮 Ideas for Future Improvements
-
-- Independent Y-range inputs
-- Export the graph as an image
-- Trace mode to read values under the cursor
-- Support for implicit equations and parametric curves
-- Degrees/radians toggle
+- **Export** writes an `.eps` snapshot to a fixed path (`/mnt/user-data/outputs/graph_export.eps`), which will not exist on most machines. Change `path` in `_export_canvas` to a location on your computer.
+- The toolbar's **GIF** button is a placeholder: animated GIF export is not available in this Tkinter-only build.
+- Roots, extrema, intersections, the derivative overlay and the integral work on plain `f(x)` rows only, not on inequalities or implicit curves.
+- Implicit curves and inequality shading are drawn on a pixel grid, so they are approximate and can be slow on very large windows.
+- Expressions are evaluated with Python's `eval` using a restricted namespace. That is fine for personal use, but do not expose it to untrusted input.
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome. Fork the repo, create a branch, and open a pull request.
+Issues and pull requests are welcome. Fork the repo, create a branch, and open a PR.
 
 ## 📄 License
 
-No license has been specified yet. Consider adding one (such as [MIT](https://choosealicense.com/licenses/mit/)) so others know how they can use this project.
+No license has been specified yet. Consider adding one, such as [MIT](https://choosealicense.com/licenses/mit/).
 
 ## 👤 Author
 
